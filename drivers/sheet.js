@@ -1,5 +1,6 @@
 import { env } from "node:process";
 import { JWT } from "google-auth-library";
+import { sheets as gSheet } from "@googleapis/sheets";
 
 const key = JSON.parse(env.GACC);
 
@@ -11,16 +12,10 @@ const serviceAccountAuth = new JWT({
     ],
 });
 
-/** @type import("@googleapis/sheets") */
-let gSheetModule;
-
 export async function appendRow(spreadsheetId, range, values) {
     console.log({ s: env["GOOGLE_APPLICATION_CREDENTIALS"] })
-    gSheetModule = gSheetModule || await import("@googleapis/sheets").then(m => m);
 
-    const { sheets } = gSheetModule;
-
-    const sheetClient = sheets("v4");
+    const sheetClient = gSheet("v4");
 
     const result = await sheetClient.spreadsheets.values.append({
         auth: serviceAccountAuth,

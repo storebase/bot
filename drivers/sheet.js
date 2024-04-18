@@ -24,13 +24,20 @@ export async function appendRow(spreadsheetId, range, values) {
     const result = await sheetClient.spreadsheets.values.append({
         auth: serviceAccountAuth,
         spreadsheetId, range, insertDataOption: "INSERT_ROWS", valueInputOption: "USER_ENTERED", requestBody: {
-            "range": "Sheet3",
+            "range": range,
             "majorDimension": "ROWS",
             "values": [values]
         }
     });
 
-    console.log(result);
+    if(result.status.toString().startsWith("2")) {
+        console.log(result);
+        return;
+    }
+
+
+    console.error("something is not correct", result);
+    throw new Error("failed");
 }
 
 

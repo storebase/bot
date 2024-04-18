@@ -7,8 +7,8 @@ export default (app) => {
   app.log.info("Yay! The app was loaded!");
 
   app.on("issues.opened", async (context) => {
-    const { title, url, id } = context.payload.issue;
+    const { title, number, html_url } = context.payload.issue;
 
-    await appendRow(sheets.sprintPlanningDoc.spreadsheetId, sheets.sprintPlanningDoc.range, [`=HYPERLINK("${url}", "${id}: ${title}")`]);
+    await appendRow(sheets.sprintPlanningDoc.spreadsheetId, sheets.sprintPlanningDoc.range, [`=HYPERLINK("${html_url}", "${number}: ${title}")`]);
   });
 };

@@ -2,6 +2,10 @@ import { env } from "node:process";
 import { JWT } from "google-auth-library";
 import { sheets as gSheet } from "@googleapis/sheets";
 
+const gacc = env.GACC;
+
+if(!gacc || typeof gacc !== "string") throw new Error("No/Invalid GACC:("+typeof gacc+")-length:"+gacc.length);
+
 const key = JSON.parse(env.GACC);
 
 const serviceAccountAuth = new JWT({

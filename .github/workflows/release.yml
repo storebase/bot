@@ -13,10 +13,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: >-
-          git pull
-          https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-          HEAD:refs/heads/v1
+      - run: git pull          
       - run: npm ci
       - run: npm run build
       - run: rm .gitignore

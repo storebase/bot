@@ -5,8 +5,10 @@ export default (app) => {
   app.log.info("Yay! The app was loaded!");
 
   app.on("issues.opened", async (context) => {
-    return context.octokit.issues.createComment(
-      context.issue({ body: "Hello, World!" })
-    );
+    const { title, url, id } = context.payload.issue;
+
+    const { appendRow, sheets } = await import("./drivers/sheet.js");
+
+    await appendRow(sheets.sprintPlanningDoc.spreadsheetId, sheets.sprintPlanningDoc.range, [`=HYPERLINK("${url}", "${id}: ${title}")`]);
   });
 };

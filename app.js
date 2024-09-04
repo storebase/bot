@@ -45,9 +45,18 @@ async function deleteIssue(context) {
     sheets.sprintPlanningDoc.range + "!A:A"
   );
   console.log("sheetIssueColumnValues", sheetIssueColumnValues);
+  console.log("issueNumber: ", number, typeof number);
+  const issueKey = number.toString();
+
   const indexToRemove = sheetIssueColumnValues.findIndex(
-    (row) => row[0] === number
+    (row) => row[0] === issueKey
   );
+
   console.log("indexToRemove", indexToRemove);
+  if (indexToRemove < 0) {
+    console.log("Nothing to remove", indexToRemove);
+    return;
+  }
+
   await deleteSingleRow(sheets.sprintPlanningDoc.spreadsheetId, indexToRemove);
 }

@@ -62,7 +62,7 @@ export async function deleteRows(spreadsheetId, startIndex, endIndex) {
         {
           deleteDimension: {
             range: {
-              dimension: "ROW",
+              dimension: "ROWS",
               startIndex,
               endIndex,
             },

@@ -52,11 +52,15 @@ async function deleteIssue(context) {
     (row) => row[0] === issueKey
   );
 
-  console.log("indexToRemove", indexToRemove);
+  console.log("indexToRemove+1", indexToRemove + 1);
   if (indexToRemove < 0) {
     console.log("Nothing to remove", indexToRemove);
     return;
   }
 
-  await deleteSingleRow(sheets.sprintPlanningDoc.spreadsheetId, indexToRemove);
+  await deleteSingleRow(
+    sheets.sprintPlanningDoc.spreadsheetId,
+    sheets.sprintPlanningDoc.range,
+    indexToRemove + 1
+  );
 }

@@ -52,7 +52,7 @@ export async function getData(spreadsheetId, range) {
   return values;
 }
 
-export async function deleteRows(spreadsheetId, startIndex, endIndex) {
+export async function deleteRows(spreadsheetId, pageId, startIndex, endIndex) {
   const sheetClient = gSheet("v4");
   const response = await sheetClient.spreadsheets.batchUpdate({
     auth: serviceAccountAuth,
@@ -62,6 +62,7 @@ export async function deleteRows(spreadsheetId, startIndex, endIndex) {
         {
           deleteDimension: {
             range: {
+              sheetId: pageId,
               dimension: "ROWS",
               startIndex,
               endIndex,
@@ -76,10 +77,10 @@ export async function deleteRows(spreadsheetId, startIndex, endIndex) {
   console.log(`Rows ${startIndex}-${endIndex} deleted`);
 }
 
-export async function deleteSingleRow(spreadsheetId, index) {
+export async function deleteSingleRow(spreadsheetId, pageId, index) {
   const startIndex = index;
   const endIndex = index + 1;
-  await deleteRows(spreadsheetId, startIndex, endIndex);
+  await deleteRows(spreadsheetId, pageId, startIndex, endIndex);
 }
 
 export const sheets = {

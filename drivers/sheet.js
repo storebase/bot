@@ -43,6 +43,7 @@ export async function appendRow(spreadsheetId, range, values) {
 export async function getData(spreadsheetId, range) {
   const sheetClient = gSheet("v4");
   const response = await sheetClient.spreadsheets.values.get({
+    auth: serviceAccountAuth,
     spreadsheetId,
     range,
   });
@@ -54,6 +55,7 @@ export async function getData(spreadsheetId, range) {
 export async function deleteRows(spreadsheetId, startIndex, endIndex) {
   const sheetClient = gSheet("v4");
   const response = await sheetClient.spreadsheets.batchUpdate({
+    auth: serviceAccountAuth,
     spreadsheetId,
     requestBody: {
       requests: [

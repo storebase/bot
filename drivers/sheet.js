@@ -40,6 +40,45 @@ export async function appendRow(spreadsheetId, range, values) {
     throw new Error("failed");
 }
 
+export async function getData(spreadsheetId, range) {
+  const sheetClient = gSheet("v4");
+  const response = await sheetClient.spreadsheets.values.get({
+    spreadsheetId,
+    range,
+  });
+
+  const values = response.data.values;
+  return values;
+}
+
+export async function deleteRows(spreadsheetId, startIndex, endIndex) {
+  const sheetClient = gSheet("v4");
+  const response = await sheetClient.spreadsheets.batchUpdate({
+    spreadsheetId,
+    requestBody: {
+      requests: [
+        {
+          deleteDimension: {
+            range: {
+              dimension: "ROW",
+              startIndex,
+              endIndex,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  console.log("response", response);
+  console.log(`Rows ${startIndex}-${endIndex} deleted`);
+}
+
+export async function deleteSingleRow(spreadsheetId, index) {
+  const startIndex = index;
+  const endIndex = index + 1;
+  await deleteRows(spreadsheetId, startIndex, endIndex);
+}
 
 export const sheets = {
     sprintPlanningDoc: {

@@ -41,7 +41,8 @@ async function addNewIssue(context) {
 async function deleteIssue(context) {
   const { number } = context.payload.issue;
   const sheetIssueColumnValues = await getData(
-    sheets.sprintPlanningDoc.spreadsheetId
+    sheets.sprintPlanningDoc.spreadsheetId,
+    sheets.sprintPlanningDoc.range + "!A:A"
   );
   console.log("sheetIssueColumnValues", sheetIssueColumnValues);
   const indexToRemove = sheetIssueColumnValues.findIndex(

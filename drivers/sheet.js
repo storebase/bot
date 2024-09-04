@@ -52,7 +52,7 @@ export async function getData(spreadsheetId, range) {
   return values;
 }
 
-export async function deleteRows(spreadsheetId, pageId, startIndex, endIndex) {
+export async function deleteRows(spreadsheetId, gid, startIndex, endIndex) {
   const sheetClient = gSheet("v4");
   const response = await sheetClient.spreadsheets.batchUpdate({
     auth: serviceAccountAuth,
@@ -62,7 +62,7 @@ export async function deleteRows(spreadsheetId, pageId, startIndex, endIndex) {
         {
           deleteDimension: {
             range: {
-              sheetId: pageId,
+              sheetId: gid,
               dimension: "ROWS",
               startIndex,
               endIndex,
@@ -77,15 +77,16 @@ export async function deleteRows(spreadsheetId, pageId, startIndex, endIndex) {
   console.log(`Rows ${startIndex}-${endIndex} deleted`);
 }
 
-export async function deleteSingleRow(spreadsheetId, pageId, index) {
+export async function deleteSingleRow(spreadsheetId, gid, index) {
   const startIndex = index;
   const endIndex = index + 1;
-  await deleteRows(spreadsheetId, pageId, startIndex, endIndex);
+  await deleteRows(spreadsheetId, gid, startIndex, endIndex);
 }
 
 export const sheets = {
-    sprintPlanningDoc: {
-        spreadsheetId: "1JF2Ba3Rk8FvYREFLwcOc53Yxlx_DoMCApdUIMwaOIkQ",
-        range: "Sync"
-    }
-}
+  sprintPlanningDoc: {
+    spreadsheetId: "1JF2Ba3Rk8FvYREFLwcOc53Yxlx_DoMCApdUIMwaOIkQ",
+    range: "Sync",
+    gid: 1737739308,
+  },
+};

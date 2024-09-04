@@ -60,7 +60,7 @@ async function deleteIssue(context) {
 
   await deleteSingleRow(
     sheets.sprintPlanningDoc.spreadsheetId,
-    sheets.sprintPlanningDoc.range,
+    sheets.sprintPlanningDoc.gid,
     indexToRemove + 1
   );
 }
